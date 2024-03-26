@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Events\Payment\ProductPayment;
+use App\Events\Service\MyServiceEvent;
 use App\Events\VisitingSite;
 use App\Listeners\AddCountryCache;
 use App\Listeners\GetBannerData;
@@ -12,6 +13,7 @@ use App\Listeners\GetThreeProductsData;
 use App\Listeners\GetWebInfoData;
 use App\Listeners\Payment\CreateOrder;
 use App\Listeners\Payment\StripePaySystem;
+use App\Listeners\Service\GetOrderData;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -40,6 +42,10 @@ class EventServiceProvider extends ServiceProvider
 
         ProductPayment::class => [
             CreateOrder::class
+        ],
+
+        MyServiceEvent::class => [
+            GetOrderData::class
         ]
     ];
 

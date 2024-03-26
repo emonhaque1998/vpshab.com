@@ -29,6 +29,7 @@ use App\Http\Controllers\Frontend\ResidentialRDPController;
 use App\Http\Controllers\Frontend\ResidentialVPSController;
 use App\Http\Controllers\Admin\ProfileController as AdminProfileController;
 use App\Http\Controllers\StripeController;
+use App\Http\Controllers\User\MyServicesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -70,6 +71,7 @@ Route::middleware(["auth"])->group(function () {
     Route::resource("/account-setting", AccountSettingController::class)->only(["index", "store"]);
     Route::resource("/review", ReviewController::class)->only(["show"]);
     Route::get("/checkout/{ammount}/{productId}", [CheckoutController::class, "checkout"])->middleware("checkoutValidation");
+    Route::resource("/my-services", MyServicesController::class)->only(["index"]);
 });
 
 // Country state check

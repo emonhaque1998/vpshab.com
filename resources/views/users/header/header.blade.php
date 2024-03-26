@@ -12,7 +12,7 @@
                             <a href="#">Service <i class="fa-solid fa-arrow-down nave_icon"></i></a>
                             <ul class="parent_active">
                                 <li>
-                                    <a href="">My Service</a>
+                                    <a href="{{ route('my-services.index') }}">My Service</a>
                                 </li>
                                 <li>
                                     <a href="">Order New Service</a>
