@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\Payment\ProductPayment;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,6 +20,7 @@ class StripeController extends Controller
         $information['productName'] = $request->get("productName");
         $information['totalPrice'] = $request->get("amount");
         $information['customer_name'] = Auth::user()->name;
+        $information['companyName'] = Auth::user()->companyName;
         $information['invoice'] = "IN-" . uniqid();
         $information['email'] = Auth::user()->email;
         $information['phone'] = Auth::user()->mobile;
@@ -30,10 +32,10 @@ class StripeController extends Controller
         $information["user_id"] = Auth::user()->id;
 
 
-        $totalPrice = $request->get("amount");
+        $totalPrice = floatval($information['totalPrice']);
         $two0 = "00";
 
-        $total = "$totalPrice$two0";
+        $information['payAmount'] = "$totalPrice$two0";
 
         $session = \Stripe\Checkout\Session::create([
             "line_items" => [
@@ -43,7 +45,7 @@ class StripeController extends Controller
                         'product_data' => [
                             "name" => $information['productName'],
                         ],
-                        "unit_amount" => $total,
+                        "unit_amount" => $information['payAmount'],
                     ],
                     'quantity' => 1
                 ]
@@ -54,23 +56,9 @@ class StripeController extends Controller
         ]);
 
         if($session){
-            $placeOrder = Order::create([
-                "name" => $information['customer_name'],
-                "email" => $information['email'],
-                "phone" => $information['phone'],
-                "amount" => $information['totalPrice'],
-                "address" => $information['address'],
-                "status" => $information['status'],
-                "currency" => $information['currency'],
-                "product_id" => $information['product_id'],
-                "user_id" => $information['user_id'],
-                "invoice" => $information['invoice']
-            ]);
-
-            $information['order_id'] = $placeOrder->id;
+            ProductPayment::dispatch($information);
         }
 
-        session()->flash('paymentData', $information);
         return redirect()->away($session->url);
 
     }
@@ -84,7 +72,7 @@ class StripeController extends Controller
                 "transaction_id" => $data['transaction_id'],
             ]);
         }
-        return view("invoice", ["data" => $data]);
+        return view("invoice", ["data" => $data, "order" => $order]);
     }
 
 

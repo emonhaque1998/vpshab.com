@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string("status", 10);
             $table->string("transaction_id")->nullable();
             $table->string("currency", 20);
+            $table->string('dueDate');
             $table->unsignedBigInteger("product_id")->index();
             $table->unsignedBigInteger("user_id")->index();
             $table->timestamps();

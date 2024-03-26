@@ -22,7 +22,8 @@ class Order extends Model
         "currency",
         "product_id",
         "user_id",
-        "invoice"
+        "invoice",
+        "dueDate"
     ];
 
     public function product(){

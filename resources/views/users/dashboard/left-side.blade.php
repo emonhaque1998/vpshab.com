@@ -9,7 +9,7 @@
             {{ Auth::user()->country }}
         </span>
         <br>
-        <button class="btn btn-primary btn-sm w-100">Update</button>
+        <a href="{{ route('account-setting.index') }}" class="btn btn-primary btn-sm w-100 mt-3 text-light">Update</a>
     </x-according>
 
     <x-according id="foundAccourding" title="Available Credit" icon="fa-solid fa-user">

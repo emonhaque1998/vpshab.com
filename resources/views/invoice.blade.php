@@ -27,17 +27,19 @@
                 </div>
             </div>
             <div class="bg-gray-300 rounded-lg mt-5 p-3">
-                <h1 class="font-extrabold text-lg">Invoice: #{{ $data['invoice'] }}</h1>
-                <h1>Invoice Date:</h1>
-                <h1>Due Date: 17/01/2024</h1>
+                <h1 class="font-extrabold text-lg">Invoice: #{{ $data['invoice'] ?? '' }}</h1>
+                <h1>Invoice Date: {{ $order->created_at->format('d-m-Y') }}</h1>
+                <h1>Due Date: {{ $order->dueDate }}</h1>
             </div>
 
             <div class="mt-2 p-3">
                 <h1 class="font-extrabold text-md">Invoiced To</h1>
-                <h1>Brothers Computer</h1>
+                <h1>{{ $data['companyName'] ?? '' }}</h1>
                 <h1>Name: {{ $data['customer_name'] }}</h1>
-                <h1>Manikganj , Dhaka, 1800</h1>
-                <h1>Bangladesh</h1>
+                @isset($order->user)
+                    <h1>{{ $order->user->addressFirst }} , {{ $order->user->addressSecond }}</h1>
+                    <h1>{{ $order->user->stateList }}, {{ $order->user->country }}</h1>
+                @endisset
             </div>
 
             <table class="min-w-full bg-white border border-gray-200 divide-y divide-gray-200">
@@ -65,7 +67,7 @@
                     </tr>
                     <tr>
                         <td class="px-6 text-right whitespace-nowrap border-gray-200 border text-gray-500">
-                            Sub Total
+                            Quantity
                         </td>
                         <td class="px-6 whitespace-nowrap border-gray-200 border text-gray-500">
                             jane@example.com

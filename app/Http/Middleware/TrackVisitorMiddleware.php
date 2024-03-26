@@ -2,8 +2,8 @@
 
 namespace App\Http\Middleware;
 
+use App\Events\VisitorCount;
 use Closure;
-use App\Models\Visitor;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -19,15 +19,7 @@ class TrackVisitorMiddleware
         // Get the visitor's IP address
         $ipAddress = $request->ip();
 
-        // Check if the IP address exists in the database
-        $visitor = Visitor::where('ip_address', $ipAddress)->first();
-
-        if (!isset($visitor)) {
-            // If the IP address doesn't exist, create a new record
-            Visitor::create([
-                'ip_address' => $ipAddress,
-            ]);
-        } 
+        VisitorCount::dispatch($ipAddress);
 
         return $next($request);
     }

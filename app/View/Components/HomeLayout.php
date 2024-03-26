@@ -2,6 +2,7 @@
 
 namespace App\View\Components;
 
+use App\Events\VisitingSite;
 use Closure;
 use Carbon\Carbon;
 use Illuminate\View\Component;
@@ -19,10 +20,11 @@ class HomeLayout extends Component
 
     public function __construct()
     {
-        $this->information = Cache::remember('wp_info', Carbon::now()->addDays(7), function () {
-            // Code to fetch the data if not found in the cache
-            return websiteinformation::latest()->first();
-        });
+        if(! Cache::has("wp_info")){
+            VisitingSite::dispatch();
+        }
+
+        $this->information = Cache::get("wp_info");
     }
 
     /**

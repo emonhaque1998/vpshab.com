@@ -2,8 +2,16 @@
 
 namespace App\Providers;
 
+use App\Events\Payment\ProductPayment;
 use App\Events\VisitingSite;
 use App\Listeners\AddCountryCache;
+use App\Listeners\GetBannerData;
+use App\Listeners\GetCountryData;
+use App\Listeners\GetMapData;
+use App\Listeners\GetThreeProductsData;
+use App\Listeners\GetWebInfoData;
+use App\Listeners\Payment\CreateOrder;
+use App\Listeners\Payment\StripePaySystem;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -22,7 +30,16 @@ class EventServiceProvider extends ServiceProvider
         ],
 
         VisitingSite::class => [
-            AddCountryCache::class
+            AddCountryCache::class,
+            GetBannerData::class,
+            GetMapData::class,
+            GetCountryData::class,
+            GetThreeProductsData::class,
+            GetWebInfoData::class
+        ],
+
+        ProductPayment::class => [
+            CreateOrder::class
         ]
     ];
 

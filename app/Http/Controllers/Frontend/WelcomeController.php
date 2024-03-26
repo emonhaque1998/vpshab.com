@@ -21,27 +21,17 @@ class WelcomeController extends Controller
      */
     public function index()
     {
-        $data = Cache::remember('wp_banner_info', Carbon::now()->addDays(7), function () {
-            // Code to fetch the data if not found in the cache
-            return Banner::latest()->first();
-        });
+        if(! Cache::has("wp_country_list_w_state") || ! Cache::has("wp_banner_info") || ! Cache::has("wp_map") || ! Cache::has("wp_country")){
+            VisitingSite::dispatch();
+        }
 
-        $products = Cache::remember('wp_last_there_product', Carbon::now()->addDays(7), function () {
-            // Code to fetch the data if not found in the cache
-            return Product::latest()->take(3)->get();
-        });
+        $products = Cache::get("wp_last_there_product");
 
-        $countries = Cache::remember('wp_country', Carbon::now()->addDays(7), function () {
-            // Code to fetch the data if not found in the cache
-            return Country::all();
-        });
+        $countries = Cache::get("wp_country");
 
-        $map = Cache::remember('wp_map', Carbon::now()->addDays(7), function () {
-            // Code to fetch the data if not found in the cache
-            return Mapinformation::latest()->first();
-        });
+        $map = Cache::get("wp_map");
 
-        event(new VisitingSite());
+        $data = Cache::get("wp_banner_info");
 
         return view("welcome", ["information" => $data, "products" => $products, "countries" => $countries, "map" => $map, ]);
     }
