@@ -29,7 +29,9 @@ use App\Http\Controllers\Frontend\ResidentialRDPController;
 use App\Http\Controllers\Frontend\ResidentialVPSController;
 use App\Http\Controllers\Admin\ProfileController as AdminProfileController;
 use App\Http\Controllers\StripeController;
+use App\Http\Controllers\User\MyInvoiceController;
 use App\Http\Controllers\User\MyServicesController;
+use Illuminate\Support\Facades\Redirect;
 
 /*
 |--------------------------------------------------------------------------
@@ -66,12 +68,13 @@ Route::middleware(["auth"])->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::middleware(["auth"])->group(function () {
+Route::middleware(["auth", "verified"])->group(function () {
     Route::resource("/dashboard", DashboardController::class)->only(["index"]);
     Route::resource("/account-setting", AccountSettingController::class)->only(["index", "store"]);
     Route::resource("/review", ReviewController::class)->only(["show"]);
     Route::get("/checkout/{ammount}/{productId}", [CheckoutController::class, "checkout"])->middleware("checkoutValidation");
     Route::resource("/my-services", MyServicesController::class)->only(["index"]);
+    Route::resource("/my-invoice", MyInvoiceController::class)->only(["index", "show"]);
 });
 
 // Country state check
@@ -130,6 +133,9 @@ Route::middleware(["auth"])->group(function(){
 //     //SSLCOMMERZ END
 // });
 
+Route::get("/go-back", function(){
+    return Redirect::back();
+})->name("go.back");
 
 require __DIR__ . '/adminauth.php';
 

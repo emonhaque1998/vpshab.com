@@ -15,14 +15,14 @@
                                     <a href="{{ route('my-services.index') }}">My Service</a>
                                 </li>
                                 <li>
-                                    <a href="">Order New Service</a>
+                                    <a href="{{ route('residential-vps.index') }}">Order New Service</a>
                                 </li>
                             </ul>
                         </li>
                         <li>
                             <a href="">Billing <i class="fa-solid fa-arrow-down nave_icon"></i></a>
                             <ul>
-                                <li><a href="">My Invoices</a></li>
+                                <li><a href="{{ route('my-invoice.index') }}">My Invoices</a></li>
                                 <li><a href="">Payment Methods</a></li>
                                 <li><a href="">Add Funds</a></li>
                             </ul>

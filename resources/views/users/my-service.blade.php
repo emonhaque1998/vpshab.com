@@ -20,9 +20,21 @@
                         @foreach ($orders as $order)
                             <tr>
                                 <td>{{ $order->product->title }}</td>
-                                <td>{{ $order->created_at->diffInDays($carbon::parse($order->created_at)->addDays(30)) }}
-                                    Days
-                                </td>
+                                @php
+                                    $date1 = $carbon::parse($order->created_at);
+                                    $date2 = $carbon::parse($order->dueDate);
+                                @endphp
+                                @if ($date1->diffInDays($date2) <= 3)
+                                    <td class="text-danger">
+                                        {{ $date1->diffInDays($date2) }}
+                                        Days
+                                    </td>
+                                @else
+                                    <td class="text-light">
+                                        {{ $date1->diffInDays($date2) }}
+                                        Days
+                                    </td>
+                                @endif
                                 <td>{{ $order->status }}</td>
                                 <td class="text-center"><a href="" class="btn btn-success px-2 py-1"
                                         style="font-size: 12px">Invoice</a>

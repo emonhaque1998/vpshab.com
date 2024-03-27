@@ -10,6 +10,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 
 class AddCountryCache implements ShouldQueue
 {
+    use InteractsWithQueue;
     /**
      * Create the event listener.
      */

@@ -25,7 +25,7 @@ class CreateOrder implements ShouldQueue
     public function handle(ProductPayment $event): void
     {
         $information = $event->information;
-        $dueData = now()->addDays(30)->format('d-m-Y');
+        $dueData = now()->addDays(30);
         $placeOrder = Order::create([
             "name" => $information['customer_name'],
             "email" => $information['email'],
@@ -37,7 +37,6 @@ class CreateOrder implements ShouldQueue
             "product_id" => $information['product_id'],
             "user_id" => $information['user_id'],
             "invoice" => $information['invoice'],
-            "dueDate" => $dueData
         ]);
 
         $information['order_id'] = $placeOrder->id;
