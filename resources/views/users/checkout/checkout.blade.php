@@ -25,9 +25,18 @@
                                                     <input type="hidden" value="{{ $product->title }}"
                                                         name="productName">
                                                     <input type="hidden" value="{{ $product->id }}" name="productId">
-                                                    <input type="hidden" value="{{ $totalAmount }}" name="amount">
+                                                    <input type="hidden" value="0" name="amount">
                                                     <table class="table compare min mb-5">
                                                         <tbody>
+                                                            <tr>
+                                                                <td class="border-0">
+                                                                    <div class="badge bg-purple me-1">Value</div> <span
+                                                                        class="seccolor">Total Quantity</span>
+                                                                </td>
+                                                                <td class="border-0"><b class="float-end h4 seccolor">
+                                                                        x{{ $quantity ?? '0' }}
+                                                                    </b></td>
+                                                            </tr>
                                                             <tr>
                                                                 <td class="border-0">
                                                                     <div class="badge bg-purple me-1">Value</div> <span
@@ -35,7 +44,7 @@
                                                                 </td>
                                                                 <td class="border-0"><b
                                                                         class="float-end h4 seccolor">{{ $product->currency ?? null }}
-                                                                        {{ $totalAmount ?? '0' }}
+                                                                        {{ $product->monthly_price * $quantity ?? '0' }}
                                                                     </b></td>
                                                             </tr>
                                                             <tr>

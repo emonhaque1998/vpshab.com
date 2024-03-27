@@ -5,18 +5,20 @@ namespace App\Http\Controllers\Frontend;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\ControllerClasses;
 
 class CheckoutController extends Controller
 {
-    public function checkout($ammount, $productId){
-        $country = new ControllerClasses();
-        $countryJson = $country->getCountry();
-
-        $product = Product::where('slug', $productId)->first();
+    public function checkout(Request $request){
 
 
+        $product = Product::find($request->get("productId"));
 
-        return view("users.checkout.checkout", ["totalAmount" => $ammount, "product" => $product, "countries" => $countryJson]);
+
+
+
+        return view("users.checkout.checkout", [
+            "product" => $product,
+            "quantity" => $request->get("quantityNumber"),
+        ]);
     }
 }

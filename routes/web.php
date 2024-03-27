@@ -73,7 +73,7 @@ Route::middleware(["auth", "verified"])->group(function () {
     Route::resource("/dashboard", DashboardController::class)->only(["index"]);
     Route::resource("/account-setting", AccountSettingController::class)->only(["index", "store"]);
     Route::resource("/review", ReviewController::class)->only(["show"]);
-    Route::get("/checkout/{ammount}/{productId}", [CheckoutController::class, "checkout"])->middleware("checkoutValidation");
+    Route::post("/checkout", [CheckoutController::class, "checkout"])->middleware("checkoutValidation");
     Route::resource("/my-services", MyServicesController::class)->only(["index"]);
     Route::resource("/my-invoice", MyInvoiceController::class)->only(["index", "show"]);
 });

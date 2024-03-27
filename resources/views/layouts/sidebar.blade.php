@@ -83,7 +83,7 @@
                  <div class="menu-title">Order</div>
              </a>
              <ul class="mm-collapse">
-                 <li class="{{ request()->routeIs('all-products.index') ? 'mm-active' : null }}"> <a
+                 <li class="{{ request()->routeIs('all-orders.index') ? 'mm-active' : null }}"> <a
                          href="{{ route('all-orders.index') }}"><i class="bi bi-circle"></i>All Orders</a>
                  </li>
              </ul>
