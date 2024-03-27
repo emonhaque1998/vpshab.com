@@ -25,6 +25,7 @@ use App\Http\Controllers\Admin\MapInformationController;
 use App\Http\Controllers\Admin\SpecificationsController;
 use App\Http\Controllers\Admin\ProductCategoryController;
 use App\Http\Controllers\Admin\BasicInformationController;
+use App\Http\Controllers\Admin\OrdersController;
 use App\Http\Controllers\Frontend\ResidentialRDPController;
 use App\Http\Controllers\Frontend\ResidentialVPSController;
 use App\Http\Controllers\Admin\ProfileController as AdminProfileController;
@@ -96,6 +97,10 @@ Route::middleware(["auth:admin"])->prefix("admin/products/")->group(function () 
     Route::resource("/add-product", AddProductController::class)->only(["index", "store"]);
     Route::resource("/category", ProductCategoryController::class)->only(["index", "store", "show", "update", "edit"]);
     Route::resource("/country", CountryController::class)->only(["index", "store"]);
+});
+
+Route::middleware(["auth:admin"])->prefix("admin/orders/")->group(function () {
+    Route::resource("/all-orders", OrdersController::class)->only(["index"]);
 });
 
 Route::middleware(["auth:admin"])->prefix("admin")->group(function () {

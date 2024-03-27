@@ -75,6 +75,20 @@
                  </li>
              </ul>
          </li>
+
+         <li class="{{ $activeLink(['all-orders.index']) ? 'mm-active' : null }}">
+             <a href="javascript:;" class="has-arrow" aria-expanded="{{ $activeLink(['dashboard']) ? 'true' : null }}">
+                 <div class="parent-icon"><i class="lni lni-cart"></i>
+                 </div>
+                 <div class="menu-title">Order</div>
+             </a>
+             <ul class="mm-collapse">
+                 <li class="{{ request()->routeIs('all-products.index') ? 'mm-active' : null }}"> <a
+                         href="{{ route('all-orders.index') }}"><i class="bi bi-circle"></i>All Orders</a>
+                 </li>
+             </ul>
+         </li>
+
          <li class="{{ $activeLink(['profile.index']) ? 'mm-active' : null }}">
              <a href="javascript:;" class="has-arrow" aria-expanded="{{ $activeLink(['dashboard']) ? 'true' : null }}">
                  <div class="parent-icon"><i class="bi bi-people-fill"></i>
